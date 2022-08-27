@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mem-limit-3
+  namespace: quota-demo-ns
+spec:
+  containers:
+  - name: memlimit 
+    image: nginx
+    resources:
+      limits:
+        memory: "200Mi"

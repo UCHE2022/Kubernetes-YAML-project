@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service	
+metadata:
+  name: my-service-nodeport
+  labels:
+    app: nginx-app-nodeport
+spec:
+  selector:
+    app: nginx-app-nodeport
+  type: NodePort
+  ports:
+  - nodePort: 31111
+    port: 80
+    targetPort: 80

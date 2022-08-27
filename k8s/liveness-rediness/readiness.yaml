@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: podrediness
+  name: podrediness
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podrediness
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: podrediness
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        args:
+         - /bin/sh
+         - -c
+         - sleep 20; touch webapp; sleep 600
+        readinessProbe:
+         exec:
+          command:
+            - cat
+            - webapp
+         initialDelaySeconds: 15
+         periodSeconds: 3

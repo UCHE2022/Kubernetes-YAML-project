@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-nosc
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+   matchLabels:
+     test: app
+  template:
+    metadata:
+      labels:
+        test: app
+    spec:
+     containers:
+     - name: busybox-con
+       image: busybox
+       args:
+       - /bin/sh
+       - -c
+       - touch /tmp/healthy; sleep 60; rm -rf /tmp/healthy; sleep 600
+       volumeMounts:
+       - name: sec-volume
+         mountPath: /data/demo
+       securityContext:
+         runAsUser: 5000
+         runAsGroup: 6000
+
+     volumes:
+     - name: sec-volume
+       emptyDir: {}
+     securityContext:
+       runAsUser: 1000
+       runAsGroup: 3000
+       fsGroup: 2000

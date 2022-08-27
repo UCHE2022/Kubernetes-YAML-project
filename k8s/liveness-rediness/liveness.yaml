@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: podliveness
+  name: podliveness
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podliveness
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: podliveness
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        args:
+         - /bin/sh
+         - -c
+         - touch webapp; sleep 20; rm -f webapp; sleep 600
+        livenessProbe:
+         exec:
+          command:
+            - cat
+            - webapp
+         initialDelaySeconds: 5
+         periodSeconds: 3

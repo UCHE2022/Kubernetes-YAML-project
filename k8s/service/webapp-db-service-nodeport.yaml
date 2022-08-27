@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service	
+metadata:
+  name: webapp-db-service-nodeport
+  labels:
+    app: webapp-tomcat-db-mysql
+spec:
+  selector:
+    app: webapp-tomcat-db-mysql
+  type: NodePort
+  ports:
+  - nodePort: 31234
+    port: 80
+    targetPort: 80

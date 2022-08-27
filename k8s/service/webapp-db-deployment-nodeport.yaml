@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-db-deployment-nodeport
+  labels:
+    app: webapp-tomcat-db-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-tomcat-db-mysql
+  template:
+    metadata:
+      labels:
+        app: webapp-tomcat-db-mysql
+    spec:
+      containers:
+      - name: webapp-tomcat-container
+        image: ramansharma95/webapp
+        ports:
+        - containerPort: 80
+      - name: db-mysql
+        image: ramansharma95/mysql
